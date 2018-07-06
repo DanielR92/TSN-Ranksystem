@@ -3,7 +3,7 @@
 set_time_limit(0);
 ini_set('default_charset', 'UTF-8');
 setlocale(LC_ALL, 'UTF-8');
-error_reporting(0);
+error_reporting(-1);
 
 function shutdown($mysqlcon = NULL, $logpath, $timezone, $loglevel, $reason, $nodestroypid = NULL) {
 	if($nodestroypid == NULL) {
@@ -345,7 +345,7 @@ try {
 		$sqlexec .= update_groups($ts3,$mysqlcon,$lang,$dbname,$slowmode,$timezone,$serverinfo,$logpath,$grouptime,$boostarr,$exceptgroup,$select_arr);
 		
 		// Check Plug-ins
-		//$sqlexec .= plugins_job($ts3,$mysqlcon,$lang,$dbname,$slowmode,$timezone,$grouptime,$boostarr,$resetbydbchange,$msgtouser,$currvers,$substridle,$exceptuuid,$exceptgroup,$allclients,$logpath,$rankupmsg,$ignoreidle,$exceptcid,$resetexcept,$phpcommand,$select_arr);
+		$sqlexec .= plugins_job($ts3,$mysqlcon,$lang,$dbname,$slowmode,$timezone,$grouptime,$boostarr,$resetbydbchange,$msgtouser,$currvers,$substridle,$exceptuuid,$exceptgroup,$allclients,$logpath,$rankupmsg,$ignoreidle,$exceptcid,$resetexcept,$phpcommand,$select_arr);
 		
 		$sqlexec .= $sqlexec2;
 		
