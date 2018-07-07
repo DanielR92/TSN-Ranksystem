@@ -135,15 +135,43 @@ if((time() - $job_check['last_update']['timestamp']) < 259200 && !isset($_SESSIO
 					<?PHP echo '<li'.(basename($_SERVER['SCRIPT_NAME']) == "stats.php" ? ' class="active">' : '>'); ?>
 						<a href="stats.php"><i class="fa fa-fw fa-bar-chart"></i>&nbsp;<?PHP echo $lang['winav6']; ?></a>
 					</li>
+					
 					<li class="divider"></li>
+					
+					
 					<?PHP echo '<li'.(basename($_SERVER['SCRIPT_NAME']) == "addon_assign_groups.php" ? ' class="active">' : '>'); ?>
 						<a href="javascript:;" data-toggle="collapse" data-target="#addons"><i class="fa fa-fw fa-puzzle-piece"></i>&nbsp;<?PHP echo $lang['winav12']; ?>&nbsp;<i class="fa fa-fw fa-caret-down"></i></a>
 						<ul id="addons" class="collapse">
+							
 							<?PHP echo '<li'.(basename($_SERVER['SCRIPT_NAME']) == "addon_assign_groups.php" ? ' class="active">' : '>'); ?>
 								<a href="addon_assign_groups.php"><?PHP echo $lang['stag0001']; ?></a>
 							</li>
+
+
+							<form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+							
+							<li class='active'>
+								<button type='submit' name='nav' value='_addon_assign_groups' class='btn-link'><?PHP echo $lang['stag0001']; ?></button>
+							</li>
+
+							<?PHP
+								// Addon Section
+								$basedir = '../plugins';
+								$dirs = glob($basedir.'/*', GLOB_ONLYDIR);
+								foreach ($dirs as $index=>$dir)
+								{
+									$php_path = $dir."/foreground.php";
+									echo "<li class='active'>
+											<button type='submit' name='addon' value='".substr($dir, 11)."' class='btn-link'>".substr($dir, 11)."</button>
+										</li>";
+								}
+							?>
+							</form>
+
 						</ul>
 					</li>
+					
+					
 					<li class="divider"></li>
 					<?PHP echo '<li'.(basename($_SERVER['SCRIPT_NAME']) == "admin.php" ? ' class="active">' : '>'); ?>
 						<a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-users"></i>&nbsp;<?PHP echo $lang['winav7']; ?>&nbsp;<i class="fa fa-fw fa-caret-down"></i></a>
