@@ -86,12 +86,7 @@ require_once(substr(__DIR__,0,-4).'jobs/check_db.php');
 require_once(substr(__DIR__,0,-4).'jobs/handle_messages.php');
 require_once(substr(__DIR__,0,-4).'jobs/event_userenter.php');
 require_once(substr(__DIR__,0,-4).'jobs/update_rs.php');
-require_once(substr(__DIR__,0,-4).'jobs/plugins_job.php');
-
-
-enter_logfile($logpath,$timezone,6,"Running on OS: ".php_uname("s")." ".php_uname("r"));
-enter_logfile($logpath,$timezone,6,"Using PHP Version: ".phpversion());
-enter_logfile($logpath,$timezone,6,"Database Version: ".$mysqlcon->getAttribute(PDO::ATTR_SERVER_VERSION));
+require_once(substr(__DIR__,0,-4).'jobs/addon_job.php');
 
 $currvers = check_db($mysqlcon,$lang,$dbname,$timezone,$currvers,$logpath);
 enter_logfile($logpath,$timezone,5,"Check Ranksystem files for updates...");
@@ -345,7 +340,7 @@ try {
 		$sqlexec .= update_groups($ts3,$mysqlcon,$lang,$dbname,$slowmode,$timezone,$serverinfo,$logpath,$grouptime,$boostarr,$exceptgroup,$select_arr);
 		
 		// Check Plug-ins
-		$sqlexec .= plugins_job($ts3,$mysqlcon,$lang,$dbname,$slowmode,$timezone,$grouptime,$boostarr,$resetbydbchange,$msgtouser,$currvers,$substridle,$exceptuuid,$exceptgroup,$allclients,$logpath,$rankupmsg,$ignoreidle,$exceptcid,$resetexcept,$phpcommand,$select_arr);
+		$sqlexec .= addon_job($ts3,$mysqlcon,$lang,$dbname,$slowmode,$timezone,$grouptime,$boostarr,$resetbydbchange,$msgtouser,$currvers,$substridle,$exceptuuid,$exceptgroup,$allclients,$logpath,$rankupmsg,$ignoreidle,$exceptcid,$resetexcept,$phpcommand,$select_arr);
 		
 		$sqlexec .= $sqlexec2;
 		
