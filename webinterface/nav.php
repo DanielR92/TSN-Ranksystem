@@ -37,6 +37,11 @@ if((time() - $job_check['last_update']['timestamp']) < 259200 && !isset($_SESSIO
             $('#password').password('toggle');
         });
     });
+	$(function() {
+		$("ul.dropdown-menu").on("click", "[data-keepOpenOnClick]", function(e) {
+			e.stopPropagation();
+		});
+	});
 	</script>
 </head>
 <body>
@@ -115,7 +120,7 @@ if((time() - $job_check['last_update']['timestamp']) < 259200 && !isset($_SESSIO
 					</ul>
 				</li>
 			</ul>
-			<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav side-nav">
 					<?PHP echo '<li'.(basename($_SERVER['SCRIPT_NAME']) == "ts.php" ? ' class="active">' : '>'); ?>
 						<a href="ts.php"><i class="fa fa-fw fa-headphones"></i>&nbsp;<?PHP echo $lang['winav1']; ?></a>
@@ -135,49 +140,27 @@ if((time() - $job_check['last_update']['timestamp']) < 259200 && !isset($_SESSIO
 					<?PHP echo '<li'.(basename($_SERVER['SCRIPT_NAME']) == "stats.php" ? ' class="active">' : '>'); ?>
 						<a href="stats.php"><i class="fa fa-fw fa-bar-chart"></i>&nbsp;<?PHP echo $lang['winav6']; ?></a>
 					</li>
-					
 					<li class="divider"></li>
-					
-					
 					<?PHP echo '<li'.(basename($_SERVER['SCRIPT_NAME']) == "addon_assign_groups.php" ? ' class="active">' : '>'); ?>
 						<a href="javascript:;" data-toggle="collapse" data-target="#addons"><i class="fa fa-fw fa-puzzle-piece"></i>&nbsp;<?PHP echo $lang['winav12']; ?>&nbsp;<i class="fa fa-fw fa-caret-down"></i></a>
 						<ul id="addons" class="collapse">
-							
 							<?PHP echo '<li'.(basename($_SERVER['SCRIPT_NAME']) == "addon_assign_groups.php" ? ' class="active">' : '>'); ?>
 								<a href="addon_assign_groups.php"><?PHP echo $lang['stag0001']; ?></a>
 							</li>
-
-
-							<form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-							
-							<li class='active'>
-								<button type='submit' name='nav' value='_addon_assign_groups' class='btn-link'><?PHP echo $lang['stag0001']; ?></button>
-							</li>
-
-							<?PHP
-								// Addon Section
-								$basedir = '../plugins';
-								$dirs = glob($basedir.'/*', GLOB_ONLYDIR);
-								foreach ($dirs as $index=>$dir)
-								{
-									$php_path = $dir."/foreground.php";
-									echo "<li class='active'>
-											<button type='submit' name='addon' value='".substr($dir, 11)."' class='btn-link'>".substr($dir, 11)."</button>
-										</li>";
-								}
-							?>
-							</form>
-
 						</ul>
 					</li>
-					
-					
 					<li class="divider"></li>
-					<?PHP echo '<li'.(basename($_SERVER['SCRIPT_NAME']) == "admin.php" ? ' class="active">' : '>'); ?>
+					<li>
 						<a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-users"></i>&nbsp;<?PHP echo $lang['winav7']; ?>&nbsp;<i class="fa fa-fw fa-caret-down"></i></a>
 						<ul id="demo" class="collapse">
+							<?PHP echo '<li'.(basename($_SERVER['SCRIPT_NAME']) == "admin_addtime.php" ? ' class="dropdown-item active">' : '>'); ?>
+								<a href="admin_addtime.php" class="addtime"><?PHP echo $lang['wihladm1']; ?></a>
+							</li>
 							<li>
-								<a href="admin.php"><?PHP echo $lang['wihladm1']; ?></a>
+								<a href="admin_remtime.php"><?PHP echo $lang['wihladm2']; ?></a>
+							</li>
+							<li>
+								<a href="admin_resetdata.php"><?PHP echo $lang['wihladm3']; ?></a>
 							</li>
 						</ul>
 					</li>
