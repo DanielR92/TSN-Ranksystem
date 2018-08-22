@@ -60,15 +60,7 @@ if(!isset($_POST['number']) || $_POST['number'] == "yes") {
 
 if (isset($_POST['update']) && $_SESSION[$rspathhex.'username'] == $webuser && $_SESSION[$rspathhex.'password'] == $webpass && $_SESSION[$rspathhex.'clientip'] == getclientip() && $_POST['csrf_token'] == $_SESSION[$rspathhex.'csrf_token']) {
 	$setontime = 0;
-	if($_POST['setontime_day']) { $setontime = $setontime + $_POST['setontime_day'] * 86400; }
-	if($_POST['setontime_hour']) { $setontime = $setontime + $_POST['setontime_hour'] * 3600; }
-	if($_POST['setontime_min']) { $setontime = $setontime + $_POST['setontime_min'] * 60; }
-	if($_POST['setontime_sec']) { $setontime = $setontime + $_POST['setontime_sec']; }
-	if($setontime == 0) {
-		$err_msg = $lang['errseltime']; $err_lvl = 3;
-	} elseif($_POST['user'] == NULL) {
-		$err_msg = $lang['errselusr']; $err_lvl = 3;
-	} else {
+	
 		$succmsg = '';
 				
 		$tables = array("user_snapshot", 
@@ -89,7 +81,9 @@ if (isset($_POST['update']) && $_SESSION[$rspathhex.'username'] == $webuser && $
 				$err_msg = substr($succmsg,0,-4); $err_lvl = NULL;
 			}
 		}
-	}
+		
+		exec($phpcommand." ".substr(__DIR__,0,-12)."worker.php restart");
+	
 }
 
 $_SESSION[$rspathhex.'csrf_token'] = bin2hex(openssl_random_pseudo_bytes(32));
@@ -100,7 +94,7 @@ $_SESSION[$rspathhex.'csrf_token'] = bin2hex(openssl_random_pseudo_bytes(32));
 				<div class="row">
 					<div class="col-lg-12">
 						<h1 class="page-header">
-							<?php echo $lang['wihladm1']; ?>
+							<?php echo $lang['wihladm3']; ?>
 						</h1>
 					</div>
 				</div>
@@ -113,7 +107,7 @@ $_SESSION[$rspathhex.'csrf_token'] = bin2hex(openssl_random_pseudo_bytes(32));
 						<div class="col-md-6">
 							<div class="panel panel-default">
 								<div class="panel-body">
-									<label class="col-sm-4 control-label" data-toggle="modal" data-target="#setontimedesc">Info:<i class="glyphicon help-hover glyphicon-question-sign"></i> Alle User werden aus der Datenbank gelöscht!</label>
+									<label class="col-sm-4 control-label" data-toggle="modal" data-target="#userresettime">Info:<i class="glyphicon help-hover glyphicon-question-sign"></i> Alle User werden aus der Datenbank gelöscht!</label>
 									
 								</div>
 							</div>
@@ -132,15 +126,16 @@ $_SESSION[$rspathhex.'csrf_token'] = bin2hex(openssl_random_pseudo_bytes(32));
 		</div>
 	</div>
 	
-<div class="modal fade" id="wiselclddesc" tabindex="-1">
+
+<div class="modal fade" id="userresettime" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><?php echo $lang['wiselcld']; ?></h4>
+        <h4 class="modal-title"><?php echo $lang['wihladm3']; ?></h4>
       </div>
       <div class="modal-body">
-        <?php echo $lang['wiselclddesc']; ?>
+        <?php echo $lang['userresettime']; ?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?PHP echo $lang['stnv0002']; ?></button>
@@ -148,37 +143,6 @@ $_SESSION[$rspathhex.'csrf_token'] = bin2hex(openssl_random_pseudo_bytes(32));
     </div>
   </div>
 </div>
-<div class="modal fade" id="setontimedesc" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><?php echo $lang['setontime']; ?></h4>
-      </div>
-      <div class="modal-body">
-        <?php echo $lang['setontimedesc']; ?>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?PHP echo $lang['stnv0002']; ?></button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="wiadmhidedesc" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><?php echo $lang['wiadmhide']; ?></h4>
-      </div>
-      <div class="modal-body">
-        <?php echo $lang['wiadmhidedesc']; ?>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?PHP echo $lang['stnv0002']; ?></button>
-      </div>
-    </div>
-  </div>
-</div>
+
 </body>
 </html>
