@@ -71,7 +71,7 @@ if (isset($_POST['update']) && $_SESSION[$rspathhex.'username'] == $webuser && $
 		"stats_server", 
 		"stats_platforms", 
 		"stats_nations", 
-		"server_usage", "groups");
+		"server_usage");
 		
 		foreach($tables as $table) 
 		{
